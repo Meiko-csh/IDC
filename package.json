@@ -1,0 +1,32 @@
+{
+  "name": "eco-community",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "buildtest": "vue-cli-service build --mode test",
+    "servetest": "vue-cli-service serve --mode test"
+  },
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^2.6.5",
+    "crypto": "^1.0.1",
+    "iview": "^3.4.2",
+    "js-base64": "^2.5.1",
+    "jsencrypt": "^3.0.0-rc.1",
+    "moment": "^2.24.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "throttle-debounce": "^2.1.0",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.10.0",
+    "@vue/cli-service": "^3.10.0",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
