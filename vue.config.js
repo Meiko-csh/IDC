@@ -1,4 +1,5 @@
 //详细配置参见官方文档https://cli.vuejs.org/zh/config/
+const webpack = require("webpack");
 module.exports = {
 
     //项目路径设置别名
@@ -12,7 +13,15 @@ module.exports = {
                 'network': '@/network',
                 'views': '@/views',
             }
-        }
+        },
+        plugins:[
+            new webpack.ProvidePlugin({
+              $:'jquery',
+              jQuery:'jquery',
+              'window.jQuery':'jquery',
+              PoPper:['popper.js','default']
+            })
+        ]
     },
 
     //by tf 以下配置暂且保留，复制网上的配置文件
@@ -72,7 +81,7 @@ module.exports = {
         port: 9099,
         // https: false,
         // hotOnly: false,
-        proxy: {
+      proxy: {
             'api': {
                 target: process.env.VUE_APP_SERVER_HOST,
                 ws: false,
