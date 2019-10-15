@@ -8,10 +8,10 @@ import store from '../store/store'
 export function request(config) {
     //引入base64编码，node的import没成功
     let Base64 = require('js-base64').Base64;
-
     // 1.创建axios的实例
     const instance = axios.create({
-        baseURL: process.env.VUE_APP_SERVER_HOST_PRE,
+        // baseURL: process.env.VUE_APP_SERVER_HOST_PRE,
+        baseURL: 'http://tt.wo.cn/',
         timeout: 100000
     })
 

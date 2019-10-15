@@ -694,7 +694,7 @@
 
             }
             /*else if(usertag==='000'){
-            this.$request(
+            this.request(
                 {
                     method:'get',
                     url:'/vip/vipInfo/get',
@@ -763,7 +763,7 @@
 
 /*
 
-            this.$request(
+            this.request(
                 {
                     method:'get',
                     url:'/vip/vipInfo/get',

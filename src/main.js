@@ -8,7 +8,11 @@ import * as filters from './filters/filters';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import './assets/css/style.css';
-import'@babel/polyfill';
+import '@babel/polyfill';
+//引入bootstrap.js
+import 'bootstrap';
+//引入bootstrap.css
+import 'bootstrap/dist/css/bootstrap.css'
 //animate动画
 import 'animate.css'
 //增加rsa加密
@@ -32,5 +36,3 @@ new Vue({
     router,
     store
 }).$mount('#app')
-
-
