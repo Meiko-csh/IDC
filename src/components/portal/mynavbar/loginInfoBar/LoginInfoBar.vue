@@ -75,7 +75,7 @@
             console.log(keyword);
             console.log(that);
             that.$request({
-              methods:'post',
+              method:'post',
               url: '/kapply/elasticsearchSearch/keywordRecommend',
               headers: {
                 'Content-Type': "application/json;charset=utf-8"
