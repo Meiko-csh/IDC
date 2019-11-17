@@ -10,8 +10,7 @@ export function request(config) {
     let Base64 = require('js-base64').Base64;
     // 1.创建axios的实例
     const instance = axios.create({
-        // baseURL: process.env.VUE_APP_SERVER_HOST_PRE,
-        baseURL: 'http://tt.wo.cn/',
+        baseURL: process.env.VUE_APP_SERVER_HOST_PRE,
         timeout: 100000
     })
 

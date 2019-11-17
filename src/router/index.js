@@ -24,6 +24,28 @@ const PasswordLogin = () => import('../views/login/PasswordLogin');
 const Agreement = () => import('../views/member/Agreement');
 const Memberapplication = () => import('../views/member/Memberapplication')
 const MemberReview = () => import('../views/member/MemberReview')
+const datam = () => import('../components/idc/datam')
+// const issue = () => import('../components/idc/upload')
+const treeList=()=>import('../components/idc/treeList')
+const text=()=>import('../components/idc/text')
+
+
+// const prodIssue=()=>import('../components/idc/prodIssue')
+const prodIssue=()=>import('../components/idc/prodIssue')
+
+const tail=()=>import('../components/idc/tail')
+const treeDetails=()=>import('../components/idc/treeDetails')
+const energyIssue=()=>import('../components/idc/energyIssue')
+const idcIndex=()=>import('../components/idc/idcIndex')
+const awaitwait=()=>import('../components/idc/await')
+const marketingAwait=()=>import('../components/idc/marketingAwait')
+const energyDetails=()=>import('../components/idc/energyDetails')
+
+const fuzzy=()=>import('@/components/idc/fuzzy')
+const idcproduct=()=>import('../views/mainIdc/idcproduct')
+
+const idcEnergy=()=>import('../views/mainIdc/idcenergy')
+
 // const Category = () => import('../views/category/Category')
 // const Cart = () => import('../views/cart/Cart')
 // const Profile = () => import('../views/profile/Profile')
@@ -38,6 +60,71 @@ const routes = [
     {
         path: '',
         redirect: '/home'
+    },
+    {
+        path: '/datam', //idc专区 头
+        component: datam
+    },
+    // {
+    //     path: '/issue', //idc专区
+    //     component: issue
+    // },
+    {
+        path: '/awaitwait', //待开发
+        name:2,
+        component: awaitwait
+    },
+    {
+        path: '/marketingAwait', //待开发
+        name:3,
+        component: marketingAwait
+    },
+    {
+        path: '/treeList', //idc专区
+        component: treeList
+    },
+    {
+        path: '/text', //idc专区 
+        component: text
+    },
+    {
+        path: '/prodIssue', //idc专区 发布页面 idcProduct
+        component: prodIssue
+    },
+    {
+        path: '/idcProduct', //idc专区 发布产品
+        name:0,
+        component: idcproduct
+    },
+    {
+        path:"/idcEnergy",   //idc 赋能专区
+        name:1,
+        component:idcEnergy,
+    },
+    {
+        path:"/energyIssue",   //idc 赋能专区
+        component:energyIssue,
+    },
+    {
+        path:"/energyDetails",   //idc 赋能专区
+        component:energyDetails,
+    },
+    {
+        path: '/tail', //idc专区
+        component: tail
+    },
+    {
+        path: '/idcIndex', //idc专区
+        component: idcIndex
+    },
+    {
+        path:"/treeDetails",
+        component:treeDetails,
+        name:'treeDetails'
+    },
+    {
+        path:"/fuzzy",
+        component:fuzzy
     },
     {
         path: '/portal',

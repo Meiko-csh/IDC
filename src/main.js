@@ -11,6 +11,7 @@ import './assets/css/style.css';
 import'@babel/polyfill';
 //引入bootstrap.js
 import 'bootstrap';
+import axios from './axios'
 //引入bootstrap.css
 import 'bootstrap/dist/css/bootstrap.css'
 //animate动画
@@ -19,7 +20,7 @@ import 'animate.css'
 import { jsencrypt } from './network/jsencrypt';
 
 Vue.use(iView);
-
+Vue.prototype.$bus=new Vue()
 //  全局过滤器
 // debugger
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
