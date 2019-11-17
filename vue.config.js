@@ -14,12 +14,12 @@ module.exports = {
                 'views': '@/views',
             }
         },
-        plugins:[
+        plugins: [
             new webpack.ProvidePlugin({
-              $:'jquery',
-              jQuery:'jquery',
-              'window.jQuery':'jquery',
-              PoPper:['popper.js','default']
+                $: 'jquery',
+                jQuery: 'jquery',
+                'window.jQuery': 'jquery',
+                PoPper: ['popper.js', 'default']
             })
         ]
     },
@@ -81,7 +81,7 @@ module.exports = {
         port: 9099,
         // https: false,
         // hotOnly: false,
-      proxy: {
+        proxy: {
             'api': {
                 target: process.env.VUE_APP_SERVER_HOST,
                 ws: false,

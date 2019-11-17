@@ -8,7 +8,7 @@ import * as filters from './filters/filters';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import './assets/css/style.css';
-import'@babel/polyfill';
+import '@babel/polyfill';
 //引入bootstrap.js
 import 'bootstrap';
 import axios from './axios'
@@ -37,5 +37,3 @@ new Vue({
     router,
     store
 }).$mount('#app')
-
-
