@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- 发布赋能产品页 -->
         <div class="subject-con">
             <p class="subject">发布赋能产品</p>
         </div>
@@ -228,50 +227,40 @@
                 principal: "",
                 //封面
                 cover: {
-                    //受否显示删除按钮
                     'deltoggle': true,
-                    //是否显示预览按钮
                     'viewtoggle': true,
-                    //是否显示下载按钮
                     'downloadtoggle': true,
-                    //是否只能上传图片
-                    'onlyimg': true,
-                    //上传文件的参数
                     'uploadconfig': [
-                        {
-                            'infoId': "",
-                            'infoType': 'IDCEnergy',
-                        }
-                    ],
-                    //是否为单文件上传
-                    'single': true,
+                         {
+                           '  formId':"",
+                             'infoType': 'IDCEnergy',
+                         },
+                    ]
+
                 },
                 //配图
                 illustratingpicture: {
                     'deltoggle': true,
                     'viewtoggle': true,
                     'downloadtoggle': true,
-                    'onlyfile': true,
-                    //是否只能上传图片
-                    'onlyimg': true,
                     'uploadconfig': [
                         {
-                            'infoId': '',
-                            'infoType': 'IDCEnergy',
-                        }
-                    ],
-                    // 'single': true,
+                             'formId':13472,
+                             'infoType': 'IDCEnergy',
+                         },
+                    ]
                 },
                 //附件
-                //附件提供的参数传回去
                 accessory: {
                     'deltoggle': true,
                     'viewtoggle': true,
                     'downloadtoggle': true,
-                    'onlyfile': true,
-                    'uploadconfig': [],
-                    'single': false,
-                    'filelength': 5
+                    'ploadconfig': [
+                        {
+                            'formId':"",
+                             'infoType': 'IDCEnergy',
+                         },
+                    ]
                 },
                 contactName: "",
 
@@ -621,6 +610,7 @@
                         // "dcAttach"= "",
                         // "idcPicture": "",
 
+
                         //封面
                         // let coverPicture = userinfo.coverPicture;
                         // let idccoverPicture = {
@@ -631,14 +621,17 @@
                         //that.cover.uploadconfig.push(idccoverPicture)
 
                         //配图
-                        let energyPicture = userinfo.energyPicture;
-                         console.log(energyPicture);
-                        for(let item of this.illustratingpicture.uploadconfig){
-                           item.infoId=energyPicture
+                        let idcPicture = userinfo.energyPicture;
+                        // let objIdcPicTure = {
+                        //     'formId': idcPicture,
+                        //     'formType': "",
+                        // }
+                        for (let item of that.illustratingpicture.uploadconfig) {
+                            item.infoId = idcPicture
                         }
-                        console.log(this.illustratingpicture.uploadconfig);
+
                         //附件
-                        // let uploadList = userinfo.idcAttach
+                        let uploadList = userinfo.idcAttach
                         // if (userinfo.idcAttach != null) {
                         //     for (let item of uploadList) {
                         //         let data = {
@@ -909,7 +902,7 @@
                         },
                         data: list
                     }).then(res => {
-                         window.open(location.origin + "/task/tasks/workplatform",'_self')
+                        // window.open(location.origin + "/task/tasks/workplatform",'_self')
                     }).catch(function (error) {
                         console.log(error)
                     })
@@ -1193,7 +1186,6 @@
         border: 1px solid #e8e8e8;
         margin: 0 auto !important;
     }
-
     .idc-bottom {
         max-width: 1200px !important;
         margin: 0 auto;

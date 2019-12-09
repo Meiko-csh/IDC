@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- idc发布产品页 -->
         <div class="subject-con">
             <p class="subject">发布产品</p>
         </div>
@@ -519,7 +520,8 @@
 
         },
         mounted() {
-            this.isEdit();
+     
+     
         },
 
         watch: {
@@ -689,9 +691,9 @@
                 for (let item of msg) {
                     setUpload.attachName = item.nameCh
                     setUpload.attachId = item.flowId
-
+                    this.dt.push(setUpload)
                 }
-                this.dt.push(setUpload)
+
 
                 console.log(this.dt);
 
@@ -775,16 +777,16 @@
                         //根据草稿返回的id查找附件
                         let uploadList = userinfo.idcAttach;
                         console.log(uploadList);
-                        
+
                         for (let item of uploadList) {
                             var itemattachId = {
                                 'infoId': item.attachId,
                                 'infoType': 'IDCProduct',
                             }
-
+                            that.accessory.uploadconfig.push(itemattachId)
                         }
-                        that.accessory.uploadconfig.push(itemattachId)
-                            console.log(that.accessory.uploadconfig);
+
+                        console.log(that.accessory.uploadconfig);
 
                         //触发三级联动
                         for (let i of that.projectList) {

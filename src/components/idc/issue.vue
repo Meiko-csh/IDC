@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- 发布赋能产品页 -->
         <div class="subject-con">
             <p class="subject">发布赋能产品</p>
         </div>
@@ -27,7 +26,7 @@
                                     <Select style="width:190px;" @on-open-change='getSltData' v-model="selected"
                                         @on-change="prodList($event)" :label-in-value="true">
                                         <Option v-for="item in this.projectList" :key="item.codeID" :value="item.codeID"
-                                            :data-radius='100'>{{item.codeName}}</Option>
+                                           >{{item.codeName}}</Option>
                                     </Select>
                                     <div class="div-small div-small-two"><small class="small-son"
                                             v-show="prodListShow">此项不能为空</small></div>
@@ -42,7 +41,7 @@
                                             value="IDC增值产品" class="provincial-radio">
                                         <label>IDC增值产品</label> -->
                                     <Select style="width:190px" @on-open-change='getSlectType' v-model="selectedType"
-                                        @on-change="prodTypes" :disabled="disabled1">
+                                        @on-change="prodTypes($event)" :disabled="disabled1" :label-in-value="true">
                                         <Option v-for="item in this.prodType" :key="item.codeID" :value="item.codeID">
                                             {{item.codeName}}</Option>
                                     </Select>
@@ -59,8 +58,8 @@
                                     <!-- <Select style="width:190px" v-model="selectedClass">
                                             <Option value="beijinga">New York</Option>
                                         </Select> -->
-                                    <Select style="width:190px" @on-open-change='getSlectClass' v-model="selectedClass"
-                                        :disabled="disabled2">
+                                    <Select style="width:190px" @on-open-change='getSlectClass' v-model="selectedClassName"
+                                        :disabled="disabled2" @on-change="prodClassValue($event)"  :label-in-value="true" >
                                         <Option v-for="item in this.prodClass" :key="item.codeID" :value="item.codeID">
                                             {{item.codeName}}</Option>
                                     </Select>
@@ -72,28 +71,8 @@
                                 <i-col span="8">
                                     <div style="display: flex;">
                                         <label style="margin-left: -3px">负责人信息：</label>
-                                        <!-- <fuzzy style="position: absolute; left: 92px;" @fyzzyID="getMsg"
-                                            @lickserch='licksch' ref="fuzzyShow" :tasks="principal"></fuzzy> -->
-                                        <div class="outBox" @click="fuzzy($event)"
-                                            style="position: absolute; left: 92px;">
-                                            <!-- @blur='focusq' -->
-                                            <input type="text" name="" id="" class="idc-fuzzt" @input='search'
-                                                v-model="opscontent" @change="opscontentchange">
-                                            <div class="fuzztList" v-show="opsfous">
-
-                                                <div v-for="(item,i) of item" :key="item.id" class="ops"
-                                                    @click="slect(i)">
-                                                    <p>{{item.name}}</p>
-                                                    <p>电话:{{item.phone}}</p>
-                                                    <p>邮箱:{{item.email}}</p>
-                                                    <p>部门:{{item.dept}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="div-small div-small-three"><small
-                                                    v-show="opscontentShow">此项不能为空</small></div>
-
-                                        </div>
-
+                                        <fuzzy style="position: absolute; left: 92px;" @fyzzyID="getMsg"
+                                            @lickserch='licksch' :opscontent1='lsContent' ref="fuzzyShow"></fuzzy>
 
                                     </div>
 
@@ -162,7 +141,8 @@
                     <div class="text-color">(产品宣传材料)</div>
                 </div>
                 <div class="idc-bottom-one">
-                    <uploadComponent :msg="accessory" @transdata="getattachment"></uploadComponent>
+                    <!-- <Button type="primary">上传文件</Button> -->
+                    <!-- <uploadComponent :msg="attachmentConfig" @transdata="getdata"></uploadComponent> -->
                 </div>
                 <div class="idc-bottom-one">
                     <!-- <span class="text-color">(文件类型：支持多种类型ppt,word)</span> -->
@@ -180,23 +160,23 @@
                 </div>
                 <!-- 上传配图 -->
                 <div class="idc-bottom-one">
-                    <uploadComponent :msg="illustratingpicture" @transimgdata="getimgdataillustration"></uploadComponent>
+                    <!-- <upload @uploadID="getUploadID"></upload> -->
+                    <!-- <uploadComponent :msg="attachmentConfigs" @transimgdata="getimgdata"></uploadComponent> -->
                 </div>
                 <div class="idc-bottom-one">
 
                 </div>
             </div>
-            <!-- 上传封面 -->
+            <!-- 上传配图 -->
             <div class="upload-input">
                 <div class="idc-text">
                     <label style="margin:0" class="star">上传封面</label>
                     <div class="text-color">(图片)</div>
                 </div>
-                <!-- 上传封面 -->
+                <!-- 上传配图 -->
                 <div class="idc-bottom-one">
                     <!-- <upload @uploadID="getUploadID"></upload> -->
-                    <uploadComponent :msg="cover" @transimgdata="getimgdata"></uploadComponent>
-                    <div class="div-small"><small v-show="cover">此项不能为空</small></div>
+                    <uploadComponent :msg="attachmentConfigs" @transimgdata="getimgdata"></uploadComponent>
                 </div>
                 <div class="idc-bottom-one">
                     <!-- <span class="text-color">(文件类型：支持多种类型jpg,png)</span> -->
@@ -225,68 +205,27 @@
         },
         data() {
             return {
-                principal: "",
-                //封面
-                cover: {
-                    //受否显示删除按钮
-                    'deltoggle': true,
-                    //是否显示预览按钮
-                    'viewtoggle': true,
-                    //是否显示下载按钮
-                    'downloadtoggle': true,
-                    //是否只能上传图片
-                    'onlyimg': true,
-                    //上传文件的参数
-                    'uploadconfig': [
-                        {
-                            'infoId': "",
-                            'infoType': 'IDCEnergy',
-                        }
-                    ],
-                    //是否为单文件上传
-                    'single': true,
-                },
-                //配图
-                illustratingpicture: {
+                attachmentConfig: {
                     'deltoggle': true,
                     'viewtoggle': true,
-                    'downloadtoggle': true,
-                    'onlyfile': true,
-                    //是否只能上传图片
-                    'onlyimg': true,
-                    'uploadconfig': [
-                        {
-                            'infoId': '',
-                            'infoType': 'IDCEnergy',
-                        }
-                    ],
-                    // 'single': true,
+                    'downloadtoggle': true
                 },
-                //附件
-                //附件提供的参数传回去
-                accessory: {
+                attachmentConfigs: {
                     'deltoggle': true,
                     'viewtoggle': true,
-                    'downloadtoggle': true,
-                    'onlyfile': true,
-                    'uploadconfig': [],
-                    'single': false,
-                    'filelength': 5
+                    'downloadtoggle': true
                 },
-                contactName: "",
-
                 dt: [],
-                imgdt: "",
+                imgdt: [],
                 dataImg: [],
 
-                illustration: "",
                 Optionval: "",
 
                 //获取产品id
-                energyProdID: "",
+                productID: "",
 
                 //上传配图传来的id
-                // upload: "",
+                upload: "",
 
                 lsContent: 123,
 
@@ -324,7 +263,7 @@
 
                 //产品分类数据
                 prodClass: [],
-                //产品分类双向绑定
+                 //产品分类双向绑定
                 selectedClass: "",
                 selectedClassName: "",
 
@@ -369,28 +308,16 @@
                 selectedTypeShow: false,
                 //产品分类
                 selectedClassShow: false,
-
-                //封面
-                cover: false,
-
-                //模糊查询提示
-                opscontentShow: false,
-                //模糊查询下拉框
-                opsfous: false,
-                //模糊查询
-                item: [],
-                //模糊查询的id
-                fuzzycodeID: "",
-                //模糊查询负责人id
-                //personID:""
             }
         },
         created() {
             this.getSltData();
-        },
-        mounted() {
             this.isEdit();
+
+
+
         },
+
         watch: {
             selected(val) {
                 this.prodListShow = this.selected == "" ? true : false;
@@ -402,272 +329,67 @@
                 this.selectedClassShow = this.selectedClass == "" ? true : false
             },
 
-            opscontent(val) {
-                if (val == '') {
 
-                    this.deptShow = false;
-                    this.phoneShow = false
-                    this.emailShow = false;
-
-                }
-            }
         },
 
         methods: {
-            //点击空白模糊查询消失
-            fuzzy(e) {
-                let funFuzzy = document.querySelector(':not(outBox)');
-                //  funFuzzy.onclick=function(e){
-                //     e.stopPropagation();
-                //    this.opsfous = false
-                //      console.log(123)
-                //  }
-                funFuzzy.onclick = e => {
-                    e.stopPropagation();
-                    this.opsfous = false
-                };
-            },
-            opscontentchange() {
-                this.opscontentShow = this.opscontent == "" ? true : false;
-            },
-
-            //模糊查询axios
-            search() {
-                if (this.opscontent != "") {
-                    console.log(this.opscontent);
-                    
-                    // this.opsfous = true
-                    let that = this;
-                    that.$request({
-                        methods: 'get',
-                        url: '/auth/user/getUserInfoBySearch',
-                        // headers:{
-                        //     'Content-Type':'application/json;charset=utf-8'
-                        // },
-                        params: {
-                            "orgId": 99,
-                            "inputText": that.opscontent
-                        },
-                    }).then(function (res) {
-                        if (res.data.length == 0) {
-                            that.opsfous = false
-                        } else {
-                            that.opsfous = true
-                        }
-                        that.item = res.data
-                        // this.name=res.data.name;
-                        // console.log(res.data)
-                    }).catch(function (err) {
-                        console.log(err);
-                        console.log("退出登录请求后台失败");
-                    });
-                } else {
-                    this.opsfous = false
-                }
-
-                if (this.opscontent == "") {
-                    this.deptShow = true;
-                    this.phoneShow = true;
-                    this.emailShow = true;
-                }
-            },
-
-
-            slect(i) {
-                //负责人名字
-
-                this.opscontent = this.item[i].name;
-                //负责人id
-                this.fuzzycodeID = this.item[i].id;
-                //负责人部门
-                this.dept = this.item[i].dept;
-
-
-                //负责人手机号
-                this.phone = this.item[i].phone;
-                //负责人邮箱
-                this.email = this.item[i].email;
-                //显示隐藏模糊查询显示
-                this.opsfous = false;
-                let that = this;
-
-
-
-                if (that.dept != '') {
-
-
-                    that.deptShow = true;
-                } else {
-                    that.deptShow = false
-                    that.dept = "";
-                }
-                if (that.phone != '') {
-                    that.phoneShow = true;
-
-                } else {
-                    that.phoneShow = false
-                    that.phone = "";
-                }
-
-                if (that.email != '') {
-                    that.emailShow = true;
-
-                } else {
-                    that.emailShow = false;
-                    that.email = "";
-                }
-
-
-            },
-
-            // selectCreated(){
-            //    let that=this;
-
-            // },
-            userPhone() {
-               
-                
-                let that = this;
-                that.$request({
-                    methods: 'get',
-                    url: '/auth/user/getUserInfoBySearch',
-                    params: {
-                        "orgId": 99,
-                        "inputText": that.phone
-                    },
-                }).then(function (res) {
-                    if (res.data[0].phone >= 10) {
-                        let detailed = res.data[0]
-                        that.contactName = detailed.contactName;
-                        that.principal = detailed.name;
-                        that.dept = detailed.dept;
-                        that.phone = detailed.phone;
-                        that.email = detailed.email;
-                        that.emailShow = true;
-                        that.deptShow = true;
-                        that.phoneShow = true;
-
-                    }
-
-                }).catch(function (err) {
-                    console.log(err);
-                });
-            },
-
             //上传附件
-            getattachment(msg) {
-                let setUpload = {}
-                for (let item of msg) {
-                    setUpload.attachId = item.flowId
-                    setUpload.attachName = item.nameCh
-                }
-                this.dt.push(setUpload)
+            getdata(item) {
+                this.dt = item;
                 console.log(this.dt);
-                // console.log(msg);
+
             },
 
             //上传封面
             getimgdata(msg) {
-                this.imgdt = msg[0].flowId;
-                console.log(this.imgdt);
-            },
-
-            //上传配图
-            getimgdataillustration(msg) {
-                this.illustration = msg[0].flowId;
-                console.log(this.illustration)
-            },
-
-            //获取产品id
-            isEdit() {
-                let that = this;
-                if (that.$route.query.energyProdID == null) {
-                    that.energyProdID = -1;
-                } else if (that.$route.query.energyProdID > 0) {
-                    that.energyProdID = that.$route.query.energyProdID
-                    console.log(that.energyProdID);
+                
+                for(let i of msg){
+                  let obj = {
+                    name:i.nameCh,
+                    ID:i.flowId
+                  }
+                  this.imgdt.push({obj});
                 }
-                if (that.energyProdID > -0) {
-                    that.$request({
+                
+              console.log(this.imgdt);
+                
+            },
+            //上传配图
+
+            isEdit() {
+                if (this.$route.query.prodID == null) {
+                    this.productID = -1;
+                } else if (this.$route.query.prodID > 0) {
+                    this.productID = this.$route.query.prodID
+                    console.log(this.productID);
+                }
+                if (this.productID > -0) {
+                    this.$request({
                         method: "GET",
-                        url: "/kapply/idcEnergy/energyProdEdit",
-                        async: false,
+                        url: "/kapplyjrq/idc/prodEdit",
                         params: {
-                            "energyProdID": that.energyProdID
+                            "prodID": this.productID
                         }
                     }).then(res => {
-                        console.log(res);
+
                         console.log(res.data.DataRows[0])
                         let userinfo = res.data.DataRows[0]
-                        that.phone = userinfo.contactPhone;
+                        this.productID = userinfo.prodID;
+                        this.prodName = userinfo.prodName;
+                        this.selectedTypeName = userinfo.prodType;
+                        // this.selectedName = userinfo.prodMode;
 
-                        that.opscontent = userinfo.contactName;
-                        console.log();
+                        this.selectedClassName = userinfo.prodClass;
+                        this.fuzzycodeID = userinfo.principalUserID;
+                        this.projectBrief = userinfo.prodIntroduction;
+                        this.selected = userinfo.targetCustomer;
 
-                        that.energyProdID = userinfo.energyProdID;
-                        that.prodName = userinfo.energyProdName;
-                        that.selectedTypeName = userinfo.energyProdMode;
-                        that.selectedName = userinfo.energyProdType;
-                        that.selectedClassName = userinfo.energyProdClass;
-                        that.fuzzycodeID = userinfo.principalUserID;
-                        that.projectBrief = userinfo.energyProdIntroduction;
-                        that.selected = userinfo.energyProdType;
-                        // that.$refs.fuzzyShow.opscontentchange(123)
-                        that.principal = userinfo.contactName;
-                       that.userPhone()
-                        // that.userPhone()
-                        console.log(that.principal);
 
-                        // "dcAttach"= "",
+
+                        // "dcAttach": "",
                         // "idcPicture": "",
-
-                        //封面
-                        // let coverPicture = userinfo.coverPicture;
-                        // let idccoverPicture = {
-                        //     'formId': coverPicture,
-                        //     'formType': "",
-
-                        // }
-                        //that.cover.uploadconfig.push(idccoverPicture)
-
-                        //配图
-                        let energyPicture = userinfo.energyPicture;
-                         console.log(energyPicture);
-                        for(let item of this.illustratingpicture.uploadconfig){
-                           item.infoId=energyPicture
-                        }
-                        console.log(this.illustratingpicture.uploadconfig);
-                        //附件
-                        // let uploadList = userinfo.idcAttach
-                        // if (userinfo.idcAttach != null) {
-                        //     for (let item of uploadList) {
-                        //         let data = {
-                        //             'formId': item.energyAttach,
-                        //             'formType': "",
-                        //         };
-                        //         this.accessory.uploadconfig.push(data)
-                        //     }
-                        // }
-
-
-                        // that.imgdt = userinfo.coverPicture;
-                       
-
-                        //触发三级联动
-                        for (let i of that.projectList) {
-                            if (i.value == that.selectedName) {
-                                that.selected = i.codeID
-                                that.disabled1 = false;
-                                if (that.selected != 0) {
-                                    that.getSlectType()
-                                    if (that.selectedType != 0) {
-                                        that.getSlectClass()
-                                    }
-                                }
-                            }
-                        }
-
-
+                        this.upload = userinfo.coverPicture;
+                        console.log(userinfo.prodMode);
 
 
                     })
@@ -676,7 +398,7 @@
 
             licksch(i) {
                 let that = this;
-                console.log(i)
+               
                 //  console.log(that.phone)
                 if (i == 19089865343) {
                     that.deptShow = true;
@@ -685,7 +407,7 @@
                     return;
                 }
                 if (i != '' && that.dept != '') {
-
+                    console.log(that.dept)
                     that.deptShow = true;
 
                 } else {
@@ -717,6 +439,7 @@
                 this.prodListShow = this.selected == "" ? true : false;
                 this.selectedTypeShow = this.selectedType == "" ? true : false;
                 this.selectedClassShow = this.selectedClass == "" ? true : false
+
             },
 
             prodShow() {
@@ -737,7 +460,7 @@
                 this.dept = dept;
                 this.phone = phone;
                 this.email = email;
-                console.log(dept, phone, email)
+               
             },
             //接受上传文件的id
             // getUploadID(upID) {
@@ -748,52 +471,50 @@
 
             //清空产品类型和产品分类
             prodList(e) {
-
+                console.log(e);
+                console.log();
 
                 this.selectedType = "";
                 this.selectedClass = "";
                 this.disabled2 = true;
-
-
             },
-            prodTypes() {
+            prodTypes(e) {
+                console.log(e.value);
+                
                 this.selectedClass = "";
                 this.disabled2 = true
-                    ;
 
-
+            },
+            prodClassValue(e){
+              this.selectedClass=e.value
             },
 
             //产品分类
             getSlectClass() {
-                let that = this;
                 if (this.selectedType != "") {
+
+                    let that = this;
+
                     that.$request({
                         method: "get",
-                        url: "/kapply/idcCode/findCodeName",
+                        url: "/kapplyjrq/idc/findCodeName",
                         params: {
-                            "parentID": that.selectedType,
+                            "parentID": this.selectedType,
                             "codeType": "energy"
                         }
                     }).then(res => {
-                        that.prodClass = res.data.DataRows;
-                        for (let item of that.prodClass) {
-                            if (item.codeName == that.selectedClassName) {
-                                that.selectedClass = item.codeID
-
-                            }
-                        }
+                        this.prodClass = res.data.DataRows;
 
                     }).catch(function (error) {
                         console.log(error)
                     })
                 } else {
-                    that.selectedClass = "";
+                    this.selectedClass = "";
                     disabled2 = true
                 }
-                for (var i of that.prodClass) {
-                    if (i.codeID == that.selectedClass) {
-                        that.selectedClassName = i.codeName
+                for (var i of this.prodClass) {
+                    if (i.codeID == this.selectedClass) {
+                        this.selectedClassName = i.codeName
 
                     }
                 }
@@ -814,30 +535,20 @@
                 let that = this;
                 that.$request({
                     method: "get",
-                    url: "/kapply/idcCode/findCodeName",
+                    url: "/kapplyjrq/idc/findCodeName",
                     params: {
-                        "parentID": that.selected,
+                        "parentID": this.selected,
                         "codeType": "energy"
                     }
                 }).then(res => {
-                    that.prodType = res.data.DataRows;
-                    for (let item of that.prodType) {
-                        if (item.codeName == that.selectedTypeName) {
-                            that.selectedType = item.codeID
-                            that.disabled2 = false;
-                            that.getSlectClass()
-
-
-                        }
-                    }
-
+                    this.prodType = res.data.DataRows;
 
                 }).catch(function (error) {
                     console.log(error)
                 })
-                for (var i of that.prodType) {
-                    if (i.codeID == that.selectedType) {
-                        that.selectedTypeName = i.codeName
+                for (var i of this.prodType) {
+                    if (i.codeID == this.selectedType) {
+                        this.selectedTypeName = i.codeName
 
                     }
                 }
@@ -850,7 +561,7 @@
                 let that = this;
                 this.$request({
                     method: "get",
-                    url: "/kapply/idcCode/findCodeName",
+                    url: "/kapplyjrq/idc/findCodeName",
                     params: {
                         "parentID": 0,
                         "codeType": "energy"
@@ -868,9 +579,9 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
-                for (var i of that.projectList) {
-                    if (i.codeID == that.selected) {
-                        that.selectedName = i.codeName
+                for (var i of this.projectList) {
+                    if (i.codeID == this.selected) {
+                        this.selectedName = i.codeName
                     }
 
 
@@ -886,56 +597,69 @@
             ProductsSave() {
                 let that = this;
 
-
                 let list = {
-                    "energyProdID": this.energyProdID,
+                    "energyProdID": this.productID,
                     "energyProdName": this.prodName,
                     "energyProdType": this.selectedTypeName,
                     "energyProdMode": this.selectedName,
                     "energyProdClass": this.selectedClassName,
                     "principalUserID": this.fuzzycodeID,
                     "energyProdIntroduction": this.projectBrief,
-                    "energyAttach": this.dt,
-                    "energyPicture": this.illustration,
-                    "coverPicture": this.imgdt,
+                    "energyAttach": "",
+                    "energyPicture": "",
+                    "coverPicture": this.upload,
                 };
 
                 console.log(list);
+                if (this.prodName && this.selectedTypeName && this.selectedName && this.selectedClassName && this.projectBrief != 0) {
+                    let that = this;
                     that.$request({
                         method: "POST",
-                        url: "/kapply/idcEnergy/energyProdSave",
+                        url: "/kapplyjrq/idc/energyProdSave",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         data: list
                     }).then(res => {
-                         window.open(location.origin + "/task/tasks/workplatform",'_self')
+                        console.log(res);
+
+                        window.location.href = "http://10.124.198.225/taskjrq/tasks/workplatform"
                     }).catch(function (error) {
                         console.log(error)
                     })
-       
+                } else {
+                    that.prodShow();
+                    that.prodTwoShow();
+
+                    that.$refs.fuzzyShow.opscontentchange(123);
+                    // this.prodListShow = this.selected!=0 ? true : false;
+                    //that.prodListShow = this.selected == "" ? true : false
+                    that.prodShowAll()
+
+                    console.log("请输入内容")
+                }
             },
             //上传
             uploading() {
                 let that = this;
                 let list = {
-                    "energyProdID": this.energyProdID,
+                    "energyProdId": -1,
                     "energyProdName": this.prodName,
                     "energyProdType": this.selectedTypeName,
                     "energyProdMode": this.selectedName,
                     "energyProdClass": this.selectedClassName,
                     "principalUserID": this.fuzzycodeID,
                     "energyProdIntroduction": this.projectBrief,
-                    "energyAttach": this.dt,
-                    "energyPicture": this.illustration,
-                    "coverPicture": this.imgdt,
+                    "energyAttach": "",
+                    "energyPicture": "",
+                    "coverPicture": this.upload,
                 };
                 console.log(list);
                 if (this.prodName && this.selectedTypeName && this.selectedName && this.selectedClassName && this.fuzzycodeID && this.projectBrief.length != 0) {
                     let that = this;
                     that.$request({
                         method: "POST",
-                        url: "/kapply/idcEnergy/energyProdPublish",
+                        url: "/kapplyjrq/idc/energyProdPublish",
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -950,7 +674,7 @@
                     that.prodShow();
                     that.prodTwoShow();
 
-                    // that.$refs.fuzzyShow.opscontentchange(123);
+                    that.$refs.fuzzyShow.opscontentchange(123);
                     that.prodShowAll()
                     console.log("请输入内容")
                 }
@@ -1467,7 +1191,7 @@
 
     .upload-input {
         display: flex;
-        margin: 20px 0;
+        margin: 20px 0; 
 
     }
 </style>

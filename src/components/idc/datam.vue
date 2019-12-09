@@ -1,5 +1,6 @@
 <template>
   <div id="father">
+    <!-- 头部 -->
     <div class="subject-con">
       <p class="subject">IDC数据管理</p>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="detailsHighest">
-        <!-- 详情页 -->
+        <!-- 赋能专区详情页 -->
         <div class="middle">
             <div class="basic-data">
                 <div class="basic-title">

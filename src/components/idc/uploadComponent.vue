@@ -385,6 +385,7 @@ export default {
         .$request({
           method: "GET",
           url: location.origin + "/authlxy/attachment/findByFlowId",
+          async: false,
           params: { flowId: flowId }
           // dataType: "JSON",
           // headers: {
@@ -486,7 +487,8 @@ export default {
       return true;
     }
   },
-  mounted() {
+  created() {
+    console.log(this.msg)
     var that = this;
     if (that.msg.deltoggle != undefined && that.msg.deltoggle != null) {
       that.deltoggle = that.msg.deltoggle;
